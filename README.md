@@ -1,2 +1,2 @@
 # My CodeForces Project
-This is my CodeForces GitHub project using VSCode!
+This is my CodeForces GitHub workspace using Python!
