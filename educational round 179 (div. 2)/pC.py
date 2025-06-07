@@ -18,16 +18,30 @@ def dict_runs(arr: list) -> dict:
 
     return max_runs
 
+def max_val_dict(dictionary: dict) -> list:
+    if not dictionary:
+        return []
+    
+    max_keys =[]
+    max_value = max(dictionary.values())
+    for key in dictionary.keys():
+        if dictionary[key] == max_value:
+            max_keys.append(key)
+    return max_keys
+
 def ourfunc(t, test_cases):
     results = []
     for case in test_cases:
         n, a = case
         runs = dict_runs(a)
-        cost=[]
-        for x in runs.keys():
-            c = (n-runs[x])*x
-            cost.append(c)
-        min_cost = min(cost)
+        min_a = min(runs.keys())
+        cost1 = min_a*(n - runs[min_a])
+
+        max_keys = max_val_dict(runs)
+        max_run_min_key = min(max_keys)
+        cost2 = max_run_min_key*(n - runs[max_run_min_key])
+
+        min_cost = min(cost1, cost2)
         results.append(min_cost)
 
     return results

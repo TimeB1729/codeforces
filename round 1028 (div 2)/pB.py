@@ -1,39 +1,33 @@
 MOD = 998244353
+N=1e5+5
+s=[]
+x=0
+s.append(1)
+while x < N:
+    s.append(2*s[-1] % MOD)
+    x+=1
+
 
 def ourfunc(t, test_cases):
     results = []
     for case in test_cases:
         n, p, q = case
-        
-        # Precompute 2^x mod MOD for x in 0..n-1
-        pow2 = [1] * n
-        for i in range(1, n):
-            pow2[i] = (pow2[i-1] * 2) % MOD
-        
-        # Convert p and q to a and b where a[j] = 2^p[j], b[j] = 2^q[j]
-        a = [pow2[p[i]] for i in range(n)]
-        b = [pow2[q[i]] for i in range(n)]
-        
-        # Initialize r with the first element
-        r = [ (a[0] + b[0]) % MOD ]
-        
-        # Track the best a and b indices so far
-        best_a = 0  # index in a[0..i]
-        best_b = 0  # index in b[0..i]
-        
-        for i in range(1, n):
-            # Update best_a and best_b for the current i
-            if a[i] > a[best_a]:
-                best_a = i
-            if b[i] > b[best_b]:
-                best_b = i
-            
-            # The maximum sum is either a[best_a] + b[i - best_a] or a[i - best_b] + b[best_b]
-            # We need to check both possibilities
-            candidate1 = (a[best_a] + b[i - best_a]) % MOD if (i - best_a) >= 0 else 0
-            candidate2 = (a[i - best_b] + b[best_b]) % MOD if (i - best_b) >= 0 else 0
-            r.append(max(candidate1, candidate2))
-        
+        i=j=k=0
+        r=[]
+        while k<n:
+            if p[k]>p[i]:
+                i=k
+            if q[k]>q[j]:
+                j=k
+            if p[i]!=q[j]:
+                if p[i]>q[j]:
+                    r.append((s[p[i]] + s[q[k-i]]) % MOD)
+                else:
+                    r.append((s[q[j]] + s[p[k-j]]) % MOD)
+            else:
+                r.append((s[p[i]] + s[max(q[k-i], p[k-j])]) % MOD)
+            k+=1
+
         results.append(r)
     return results
 
@@ -50,5 +44,3 @@ for _ in range(t):
 results = ourfunc(t, test_cases)
 for res in results:
     print(" ".join(map(str, res)))
-
-#But this code exceeds time limit for big n (near 1e5)
