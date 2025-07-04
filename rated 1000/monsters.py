@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 def ourfunc(t, test_cases):
     results = []
     for n, k, arr in test_cases:
