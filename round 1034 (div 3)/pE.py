@@ -1,5 +1,4 @@
 from collections import Counter
-
 def ourfunc(t, test_cases):
     results=[]
     for case in test_cases:
