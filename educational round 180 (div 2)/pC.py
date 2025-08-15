@@ -1,5 +1,3 @@
-import bisect
-
 def ourfunc(t, test_cases):
     results=[]
     for case in test_cases:
@@ -8,7 +6,15 @@ def ourfunc(t, test_cases):
         for i in range(n):
             for j in range(i):
                 x = max(a[n - 1], 2 * a[i]) - a[i] - a[j]
-                k = bisect.bisect_right(a[:j], x)
+                left, right = 0, j
+                while left < right:
+                    mid = (left + right) // 2
+                    if a[mid] <= x:
+                        left = mid + 1
+                    else:
+                        right = mid
+
+                k = left
                 ans += j - k
 
         results.append(ans)
